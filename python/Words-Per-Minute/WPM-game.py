@@ -9,7 +9,7 @@ def start_screen(stdscr):
 	stdscr.addstr("Welcome to the Speed Typing Test!")
 	stdscr.addstr("\nPress any key to begin!")
 	stdscr.refresh()
-	stdscr.getkey()				#Waiting for user to press key
+	stdscr.getkey()														#Waiting for user to press key
 
 def display_text(stdscr, target, current, wpm=0):
 	stdscr.addstr(target)
@@ -24,7 +24,7 @@ def display_text(stdscr, target, current, wpm=0):
 		stdscr.addstr(0, i, char, color)
 
 def load_text():
-	with open("text.txt", "r") as f:
+	with open("WPM-game.txt", "r") as f:
 		lines = f.readlines()
 		return random.choice(lines).strip()
 
@@ -37,18 +37,18 @@ def wpm_test(stdscr):
 
 	while True:
 		time_elapsed = max(time.time() - start_time, 1)
-		wpm = round((len(current_text) / (time_elapsed / 60)) / 5)
+		wpm = round((len(current_text) / (time_elapsed / 60)) / 5)		#We take average word contains 5 letters
 
 		stdscr.clear()
 		display_text(stdscr, target_text, current_text, wpm)
 		stdscr.refresh()
 
 		if "".join(current_text) == target_text:
-			stdscr.nodelay(False)
+			stdscr.nodelay(False)										#Stop no delay (to stop counting WPM) and exit while loop.
 			break
 
 		try:
-			key = stdscr.getkey()
+			key = stdscr.getkey()										#Get whatever key user is pressing
 		except:
 			continue
 
@@ -63,9 +63,9 @@ def wpm_test(stdscr):
 
 
 def main(stdscr):
-	curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
-	curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
-	curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)
+	curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)			#Set green over black as colour pair 1
+	curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)			#Set red over black as colour pair 2
+	curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)			#Set white over black as colour pair 3
 
 	start_screen(stdscr)
 	while True:
